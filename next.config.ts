@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Allow Google Fonts and Firebase
+  serverExternalPackages: [],
+  images: {
+    domains: [],
+  },
 };
 
 export default nextConfig;

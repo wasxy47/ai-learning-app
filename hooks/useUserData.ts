@@ -29,8 +29,12 @@ export function useUserData() {
   }, [user]);
 
   useEffect(() => {
-    fetchUserData();
+    const id = window.setTimeout(() => {
+      void fetchUserData();
+    }, 0);
+
+    return () => window.clearTimeout(id);
   }, [fetchUserData]);
 
-  return { userData, loading, error, refetch: fetchUserData };
+  return { userData, setUserData, loading, error, refetch: fetchUserData };
 }

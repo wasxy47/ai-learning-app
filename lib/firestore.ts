@@ -20,9 +20,20 @@ export async function createUserDoc(uid: string, email: string): Promise<void> {
  */
 export async function getUserData(uid: string): Promise<UserData | null> {
   const userRef = doc(db, 'users', uid);
-  const snap = await getDoc(userRef);
-  if (!snap.exists()) return null;
-  return snap.data() as UserData;
+  try {
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) return null;
+    return snap.data() as UserData;
+  } catch (error: any) {
+    console.error('Failed to get user data:', error);
+    // Return a fallback empty user data structure if offline
+    return {
+      email: '',
+      completedLessons: [],
+      weakAreas: [],
+      quizScores: {}
+    } as UserData;
+  }
 }
 
 /**
